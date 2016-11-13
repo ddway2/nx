@@ -16,12 +16,12 @@
 namespace nx {
 namespace MPFD {
 
-    class NX_API Field {
+    class NX_API field {
     public:
         static const int TextType = 1, FileType = 2;
 
-        Field();
-        virtual ~Field();
+        field();
+        virtual ~field();
 
         void SetType(int type);
         int GetType();

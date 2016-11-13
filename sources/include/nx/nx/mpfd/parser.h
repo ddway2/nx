@@ -26,21 +26,21 @@ namespace MPFD {
 
         void content_type(const std::string& type);
 
-        void AcceptSomeData(const char *data, const long length);
+        void accept_data(const char *data, const long length);
 
 
 
         void SetMaxCollectedDataLength(long max);
-        void SetTempDirForFileUpload(std::string dir);
+        void SetTempDirForFileUpload(const std::string& dir);
         void SetUploadedFilesStorage(int where);
 
-        std::map<std::string, Field *> GetFieldsMap();
-        Field * GetField(std::string Name);
+        std::map<std::string, field *> get_fields_map();
+        field * get_field(const std::string& Name);
 
     private:
         int WhereToStoreUploadedFiles;
 
-        std::map<std::string, Field *> Fields;
+        std::map<std::string, field *> Fields;
 
         std::string TempDirForFileUpload;
         int CurrentStatus;

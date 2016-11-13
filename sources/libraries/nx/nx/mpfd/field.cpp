@@ -8,7 +8,7 @@
 
 namespace nx {
 
-MPFD::Field::Field() {
+MPFD::field::field() {
     type = 0;
     FieldContent = NULL;
 
@@ -16,7 +16,7 @@ MPFD::Field::Field() {
 
 }
 
-MPFD::Field::~Field() {
+MPFD::field::~field() {
 
     if (FieldContent) {
         delete FieldContent;
@@ -32,7 +32,7 @@ MPFD::Field::~Field() {
 
 }
 
-void MPFD::Field::SetType(int type) {
+void MPFD::field::SetType(int type) {
     if ((type == TextType) || (type == FileType)) {
         this->type = type;
     } else {
@@ -41,7 +41,7 @@ void MPFD::Field::SetType(int type) {
 
 }
 
-int MPFD::Field::GetType() {
+int MPFD::field::GetType() {
     if (type > 0) {
         return type;
     } else {
@@ -49,7 +49,7 @@ int MPFD::Field::GetType() {
     }
 }
 
-void MPFD::Field::AcceptSomeData(char *data, long length) {
+void MPFD::field::AcceptSomeData(char *data, long length) {
     if (type == TextType) {
         if (FieldContent == NULL) {
             FieldContent = new char[length + 1];
@@ -109,11 +109,11 @@ void MPFD::Field::AcceptSomeData(char *data, long length) {
     }
 }
 
-void MPFD::Field::SetTempDir(std::string dir) {
+void MPFD::field::SetTempDir(std::string dir) {
     TempDir = dir;
 }
 
-unsigned long MPFD::Field::GetFileContentSize() {
+unsigned long MPFD::field::GetFileContentSize() {
     if (type == 0) {
         throw MPFD::Exception("Trying to get file content size, but no type was set.");
     } else {
@@ -129,7 +129,7 @@ unsigned long MPFD::Field::GetFileContentSize() {
     }
 }
 
-char * MPFD::Field::GetFileContent() {
+char * MPFD::field::GetFileContent() {
     if (type == 0) {
         throw MPFD::Exception("Trying to get file content, but no type was set.");
     } else {
@@ -145,7 +145,7 @@ char * MPFD::Field::GetFileContent() {
     }
 }
 
-std::string MPFD::Field::GetTextTypeContent() {
+std::string MPFD::field::GetTextTypeContent() {
     if (type == 0) {
         throw MPFD::Exception("Trying to get text content of the field, but no type was set.");
     } else {
@@ -161,7 +161,7 @@ std::string MPFD::Field::GetTextTypeContent() {
     }
 }
 
-std::string MPFD::Field::GetTempFileName() {
+std::string MPFD::field::GetTempFileName() {
     if (type == 0) {
         throw MPFD::Exception("Trying to get file temp name, but no type was set.");
     } else {
@@ -177,7 +177,7 @@ std::string MPFD::Field::GetTempFileName() {
     }
 }
 
-std::string MPFD::Field::GetFileName() {
+std::string MPFD::field::GetFileName() {
     if (type == 0) {
         throw MPFD::Exception("Trying to get file name, but no type was set.");
     } else {
@@ -189,20 +189,20 @@ std::string MPFD::Field::GetFileName() {
     }
 }
 
-void MPFD::Field::SetFileName(std::string name) {
+void MPFD::field::SetFileName(std::string name) {
     FileName = name;
 
 }
 
-void MPFD::Field::SetUploadedFilesStorage(int where) {
+void MPFD::field::SetUploadedFilesStorage(int where) {
     WhereToStoreUploadedFiles = where;
 }
 
-void MPFD::Field::SetFileContentType(std::string type) {
+void MPFD::field::SetFileContentType(std::string type) {
     FileContentType = type;
 }
 
-std::string MPFD::Field::GetFileMimeType() {
+std::string MPFD::field::GetFileMimeType() {
     if (type == 0) {
         throw MPFD::Exception("Trying to get mime type of file, but no type was set.");
     } else {

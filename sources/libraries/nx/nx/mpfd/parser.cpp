@@ -8,11 +8,11 @@
 
 namespace nx {
 
-std::map<std::string, MPFD::Field *> MPFD::parser::GetFieldsMap() {
+std::map<std::string, MPFD::field *> MPFD::parser::get_fields_map() {
     return Fields;
 }
 
-MPFD::Field * MPFD::parser::GetField(std::string Name) {
+MPFD::field * MPFD::parser::get_field(const std::string& Name) {
     if (Fields.count(Name)) {
         return Fields[Name];
     } else {
@@ -32,7 +32,7 @@ MPFD::parser::parser() {
 }
 
 MPFD::parser::~parser() {
-    std::map<std::string, Field *>::iterator it;
+    std::map<std::string, field *>::iterator it;
     for (it = Fields.begin(); it != Fields.end(); it++) {
         delete it->second;
     }
@@ -57,7 +57,7 @@ void MPFD::parser::content_type(const std::string& type) {
     Boundary = std::string("--") + type.substr(bp + 9, type.length() - bp);
 }
 
-void MPFD::parser::AcceptSomeData(const char *data, const long length) {
+void MPFD::parser::accept_data(const char *data, const long length) {
     if (Boundary.length() > 0) {
         // Append data to existing accumulator
         if (DataCollector == NULL) {
@@ -161,7 +161,7 @@ void MPFD::parser::SetUploadedFilesStorage(int where) {
     WhereToStoreUploadedFiles = where;
 }
 
-void MPFD::parser::SetTempDirForFileUpload(std::string dir) {
+void MPFD::parser::SetTempDirForFileUpload(const std::string& dir) {
     TempDirForFileUpload = dir;
 }
 
@@ -181,16 +181,16 @@ void MPFD::parser::_ParseHeaders(std::string headers) {
             throw Exception(std::string("Cannot find closing quote of \"name=\" attribute.\nThe headers are: \"") + headers + std::string("\""));
         } else {
             ProcessingFieldName = headers.substr(name_pos + 6, name_end_pos - (name_pos + 6));
-            Fields[ProcessingFieldName] = new Field();
+            Fields[ProcessingFieldName] = new field();
         }
 
 
         // find filename if exists
         auto filename_pos = headers.find("filename=\"");
         if (filename_pos == std::string::npos) {
-            Fields[ProcessingFieldName]->SetType(Field::TextType);
+            Fields[ProcessingFieldName]->SetType(field::TextType);
         } else {
-            Fields[ProcessingFieldName]->SetType(Field::FileType);
+            Fields[ProcessingFieldName]->SetType(field::FileType);
             Fields[ProcessingFieldName]->SetTempDir(TempDirForFileUpload);
             Fields[ProcessingFieldName]->SetUploadedFilesStorage(WhereToStoreUploadedFiles);
 
